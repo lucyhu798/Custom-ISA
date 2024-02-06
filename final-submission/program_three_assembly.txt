@@ -1,0 +1,149 @@
+>> r0 7     		
+>> r0 7 		// r0 = 0 
+And r4 r0 		//r4 = 0  = totalbyte 
+And r5 r0 		// r5 = 0  = total 
+And r6 r0 		// r6 = 0  =  temptotal 
+And r7 r0 		// r7 = 0 = bytes 
+And r3  r0 		// r3  =  0  = i 
+Addi r3 64		
+Addi r3 64 		// i = 128 
+Addi r0 160		//r0 = 160 
+Load r0 r0 		// r0 = mem[160]
+>> r0 3 		// mem[160][7:3] = [4:0]
+Loop: >> r2 7 
+>> r2 7 		// r2 = 0 
+And r6 r2 		// temptotal = 0
+Add r6 r5 		// temptotal = total 
+Load r2 r3 		// r2 = mem[i] // 128 
+>> r2 3 		
+Eq r0 r2 
+Addi r5 1 		// true total ++ 
+Eq r0 r2 
+Addi r4 1 		// true total ++ 
+Load r2 r3 		// r2 = mem[i] 
+<< r2  1 		
+>> r2 3 
+Eq r0 r2		// 
+Addi r5 1 		// true total ++ 
+Eq r0 r2 
+Addi r4 1 		// true total ++ 
+Load r2 r3 		// r2 = mem[i] 
+<< r2  2		
+>> r2 3 
+Eq r0 r2		// 
+Addi r5 1 		// true total ++ 
+Eq r0 r2 
+Addi r4 1 		// true total ++ 
+Load r2 r3 		// r2 = mem[i] 
+<< r2  3		
+>> r2 3 
+Eq r0 r2		// 
+Addi r5 1 		// true total ++ 
+Eq r0 r2 
+Addi r4 1 		// true total ++ 
+Load r2 r3 		// r2 = mem[i] 
+<< r2  4		
+>> r2  3 
+>> r1 7 
+>> r1 7 		// r1 = 0; 
+And r1 r3		// r1 = i // 128 
+Addi r1 1 		// r1 = i+1 
+Load r1 r1 		// r1 = mem[i+1] 
+>> r1 7 		
+Add r2 r1		// r2 = r2 + r1 
+Eq r0 r2 
+Addi r5 1
+Load r2 r3 		// r2 = mem[i] 
+<< r2  5		
+>> r2  3 
+>> r1 7 
+>> r1 7 		// r1 = 0; 
+And r1 r3		// r1 = i // 128 
+Addi r1 1 		// r1 = i+1 
+Load r1 r1 		// r1 = mem[i+1] 
+>> r1 6 		
+Add r2 r1		// r2 = r2 + r1 
+Eq r0 r2 
+Addi r5 1 
+Load r2 r3 		// r2 = mem[i] 
+<< r2  6		
+>> r2  3 
+>> r1 7 
+>> r1 7 		// r1 = 0; 
+And r1 r3		// r1 = i // 128 
+Addi r1 1 		// r1 = i+1 
+Load r1 r1 		// r1 = mem[i+1] 
+>> r1 5 		
+Add r2 r1		// r2 = r2 + r1 
+Eq r0 r2 
+Addi r5 1 
+Load r2 r3 		// r2 = mem[i] 
+<< r2  7		
+>> r2  3 
+>> r1 7 
+>> r1 7 		// r1 = 0; 
+And r1 r3 		// r1 = i // 128 
+Addi r1 1 		// r1 = i+1 
+Load r1 r1 		// r1 = mem[i+1] 
+>> r1 4 		
+Add r2 r1		// r2 = r2 + r1 
+Eq r0 r2 
+Addi r5 1 
+Addi r3 1 
+>> r2 7
+>>r2 7			// r2 = 0
+Add r2 r6 		// r2 = r6 
+>> r1 7 
+>> r1 7
+Add r1 r5 		// r1 = r5 
+Neq r2 r1 		// if( temptotal != total) 	// need to figure to use r1 and r2  
+Addi r7 1 		// byte ++ 
+Lt r3  159 		// i < 159 		
+Jump loop 		// true: go back to begining 
+>> r2 7 
+>> r2 7 		// r2 = 0 
+And r6 r2 		// temptotal = 0
+Add r6 r5 		// temptotal = total 
+Load r2 r3 		// r2 = mem[i] // 159 
+>> r2 3 		
+Eq r0 r2 
+Addi r5 1 
+Eq r0 r2 
+Addi r4 1 		// true total ++ 
+Load r2 r3 		// r2 = mem[i] // 159 
+<< r2 1
+>> r2 3 		
+Eq r0 r2 
+Addi r5 1 
+Eq r0 r2 
+Addi r4 1 		// true total ++ 
+Load r2 r3 		// r2 = mem[i] // 159 
+<< r2 2
+>> r2 3 		
+Eq r0 r2 
+Addi r5 1
+Eq r0 r2 
+Addi r4 1 		// true total ++  		
+Load r2 r3 		// r2 = mem[i] // 159 
+<< r2 3
+>> r2 3 		
+Eq r0 r2 
+Addi r5 1 
+Eq r0 r2 
+Addi r4 1 		// true total ++ 
+>> r2 7
+>>r2 7		// r2 = 0
+Add r2 r6 		// r2 = r6 
+>> r1 7 
+>> r1 7
+Add r1 r5 		// r1 = r5 
+Neq r2 r1 		// if( teptotal != total) 		 // need to figure to use r1 and r2  
+Addi r7 1 		// byte ++ 
+Addi r3 32 
+Addi r3 1		// i = 192
+Store r4 r3 	// r4 = mem[192]
+Addi r3 1 		// i = 193  
+Store r7 r3 	// r7 = mem[193]
+Addi r3 1 		// i = 194 
+Store r5 r3 	// r5 = mem[194]
+Ack 

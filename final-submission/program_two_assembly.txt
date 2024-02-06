@@ -1,0 +1,395 @@
+Addi r1 100            	// r1 += 32 (32)    
+Addi r1 101		// r1 += 16 (48)
+Addi r1 110		// r1 += 8 (56)
+Addi r1 010		// r1 += 4 (60)
+Addi r1 111		// r1 += 2 (62)
+Addi r1 001		// r1 += 1 (63)
+Addi r6 011		// r6 += 64 (64)
+Addi r6 101		// r6 += 16 (80)
+Addi r6 110		// r6 += 8 (88)
+Addi r6 010		// r6 += 4 (92)
+Addi r6 001		// r6 += 1 (93) LSW variable
+Add r7 r6		// r7 = r6 (93)
+Addi r7 001		// r7 += 1 (94) MSW variable
+Loop_Condition:  Addi r1 001		// r1 += 1 
+    Addi r6 001		// r6 += 1
+    Addi r7 001		// r7 += 1
+    >> r2 7		// r2 = 0
+    >> r2 7 		// r2 = 0
+    And r5 r2		// r5 = 0
+    Addi r5 011		// r5 += 64 (64)
+    Addi r5 101		// r5 += 16 (80)
+    Addi r5 110		// r5 += 8 (88)
+    Addi r5 010		// r5 += 4 (92)
+    Addi r5 111		// r5 += 2 (94)
+    Add r2 r5		// r2 = 94
+    Eq r1 r2            	// if (r1 == 94)
+    Jump Done           	// True: we have finished all 15 decodings
+    Load r2 r1     	// False: continue, load LSW into r2
+    Addi r1 001        	// r1++, grab the next byte in data 
+    Load r3 r1     	// Load MSW into r3
+    Store r2 r6		// Store r2 into mem[LSW]
+    Store r3 r7		// Store r3 into mem[MSW]
+Calc_p1:  Addi r0 011		// r0 += 64
+    Addi r0 011		// r0 += 64 (128)
+    Addi r0 100		// r0 += 32 (160)
+    Addi r0 110		// r0 += 8 (168)
+    And r2 r0 		// And LSW with decimal = 168
+    Addi r0 111		// r0 += 2 (170)
+    And r3 r0		// And MSW with decimal = 170
+    Xor r2 r3		// Xor results of r2 and r3 and store into r2
+    >> r3 7 
+  >> r3 7 			// r3 = 0
+>> r0 7
+>>r0 7			// r0 = 0 
+Add r0 r2 			// r0 = r2 
+>> r0 7 			// r0 = bit 7 
+Add r3 r2 			// r3 = r2 
+<< r3 1 			// pad with 0 
+>> r3 7 			// get bit 6 
+Xor r0 r3 			// xor 7 and 6 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 2 			//pad with 0 
+>> r3 7 			// get bits 5 
+Xor r0 r3 			// xor 7, 6, 5 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 3 			//pad with 0 
+>> r3 7 			// get bits 4 
+Xor r0 r3 			// xor 7, 6, 5, 4 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 4 			//pad with 0 
+>> r3 7 			// get bits 3 
+Xor r0 r3 			// xor 7, 6, 5, 4 ,3 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 5 			//pad with 0 
+>> r3 7 			// get bits 2 
+Xor r0 r3 			// xor 7, 6, 5, 4, 3, 2 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 6 			//pad with 0 
+>> r3 7 			// get bits 1 
+Xor r0 r3 			// xor 7, 6, 5, 4, 3, 2, 1
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 6 			//pad with 0 
+<< r3 1 			//pad with 0 
+>> r3 7 			// get bits 0 
+Xor r0 r3 			// xor 7, 6, 5, 4, 3, 2, 1, 0
+    Lt r0 00             	// if r0 < 1
+    Jump Calc_p2	// True: Jump to calc_p2
+    Addi r4 1        	// False: r4 += 1
+Calc_p2: Addi r0 101		// r0 += 16 (186)
+    Addi r0 110		// r0 += 8 (194)
+    Addi r0 010		// r0 += 4 (198)
+    Addi r0 111		// r0 += 2 (200)
+    Load r2 r6		// r2 = mem[122]
+    And r2 r0		// And LSW with decimal = 200
+    Addi r0 010		// r0 += 4 (204)
+    Load r3 r7		// r3 = mem[123]
+    And r3 r0 	 	// And MSW with decimal = 204
+    Xor r2 r3        	// Xor results of r2 and r3 and store into r2
+    >> r3 7 
+  >> r3 7 			// r3 = 0
+>> r0 7
+>>r0 7			// r0 = 0 
+Add r0 r2 			// r0 = r2 
+>> r0 7 			// r0 = bit 7 
+Add r3 r2 			// r3 = r2 
+<< r3 1 			// pad with 0 
+>> r3 7 			// get bit 6 
+Xor r0 r3 			// xor 7 and 6 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 2 			//pad with 0 
+>> r3 7 			// get bits 5 
+Xor r0 r3 			// xor 7, 6, 5 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 3 			//pad with 0 
+>> r3 7 			// get bits 4 
+Xor r0 r3 			// xor 7, 6, 5, 4 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 4 			//pad with 0 
+>> r3 7 			// get bits 3 
+Xor r0 r3 			// xor 7, 6, 5, 4 ,3 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 5 			//pad with 0 
+>> r3 7 			// get bits 2 
+Xor r0 r3 			// xor 7, 6, 5, 4, 3, 2 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 6 			//pad with 0 
+>> r3 7 			// get bits 1 
+Xor r0 r3 			// xor 7, 6, 5, 4, 3, 2, 1
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 6 			//pad with 0 
+<< r3 1 			//pad with 0 
+>> r3 7 			// get bits 0 
+Xor r0 r3 			// xor 7, 6, 5, 4, 3, 2, 1, 0
+    Lt r0 00             	// if r0 < 1
+    Jump Calc_p4	// True: Jump to calc_p4
+    Addi r4 111        	// False: r4 += 2
+ Calc_p4: Addi r0 101	// r0 += 16 (220)
+    Addi r0 010		// r0 += 4 (224)
+    Load r2 r6		// r2 = mem[122]
+    And r2 r0		// And LSW with decimal = 224
+    Addi r0 101		// r0 += 16 (240)
+    Load r3 r7		// r3 = mem[123]
+    And r3 r0 	 	// And MSW with decimal = 240
+    Xor r2 r3        	// Xor results of r2 and r3 and store into r2
+    >> r3 7 
+  >> r3 7 			// r3 = 0
+>> r0 7
+>>r0 7			// r0 = 0 
+Add r0 r2 			// r0 = r2 
+>> r0 7 			// r0 = bit 7 
+Add r3 r2 			// r3 = r2 
+<< r3 1 			// pad with 0 
+>> r3 7 			// get bit 6 
+Xor r0 r3 			// xor 7 and 6 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 2 			//pad with 0 
+>> r3 7 			// get bits 5 
+Xor r0 r3 			// xor 7, 6, 5 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 3 			//pad with 0 
+>> r3 7 			// get bits 4 
+Xor r0 r3 			// xor 7, 6, 5, 4 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 4 			//pad with 0 
+>> r3 7 			// get bits 3 
+Xor r0 r3 			// xor 7, 6, 5, 4 ,3 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 5 			//pad with 0 
+>> r3 7 			// get bits 2 
+Xor r0 r3 			// xor 7, 6, 5, 4, 3, 2 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 6 			//pad with 0 
+>> r3 7 			// get bits 1 
+Xor r0 r3 			// xor 7, 6, 5, 4, 3, 2, 1
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 6 			//pad with 0 
+<< r3 1 			//pad with 0 
+>> r3 7 			// get bits 0 
+Xor r0 r3 			// xor 7, 6, 5, 4, 3, 2, 1, 0
+    Lt r0 00             	// if r0 < 1
+    Jump Calc_p8	// True: Jump to calc_p8
+    Addi r4 010        	// False: r4 += 4
+Calc_p8: Addi r0 110		// r0 += 8 (248)
+    Addi r0 010		// r0 += 4 (252)
+    Addi r0 111		// r0 += 2 (254)
+    Load r2 r7		// r2 = mem[123]
+    And r2 r0		// And MSW with decimal = 254
+    Load r3 r6		// r3 = mem[122]
+    >> r0 7		// Set r0 to 0
+    >> r0 7		// Set r0 to 0
+    And r3 r0 	 	// And LSW with decimal = 0
+    Xor r2 r3        	// Xor results of r2 and r3 and store into r2
+    >> r3 7 
+  >> r3 7 			// r3 = 0
+>> r0 7
+>>r0 7			// r0 = 0 
+Add r0 r2 			// r0 = r2 
+>> r0 7 			// r0 = bit 7 
+Add r3 r2 			// r3 = r2 
+<< r3 1 			// pad with 0 
+>> r3 7 			// get bit 6 
+Xor r0 r3 			// xor 7 and 6 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 2 			//pad with 0 
+>> r3 7 			// get bits 5 
+Xor r0 r3 			// xor 7, 6, 5 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 3 			//pad with 0 
+>> r3 7 			// get bits 4 
+Xor r0 r3 			// xor 7, 6, 5, 4 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 4 			//pad with 0 
+>> r3 7 			// get bits 3 
+Xor r0 r3 			// xor 7, 6, 5, 4 ,3 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 5 			//pad with 0 
+>> r3 7 			// get bits 2 
+Xor r0 r3 			// xor 7, 6, 5, 4, 3, 2 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 6 			//pad with 0 
+>> r3 7 			// get bits 1 
+Xor r0 r3 			// xor 7, 6, 5, 4, 3, 2, 1
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 6 			//pad with 0 
+<< r3 1 			//pad with 0 
+>> r3 7 			// get bits 0 
+Xor r0 r3 			// xor 7, 6, 5, 4, 3, 2, 1, 0
+    Lt r0 00             	// if r0 < 1
+    Jump calc_p16	// Jump to calc_p16
+    Addi r4 110        	// False: r4 += 8
+Calc_p16:  Addi r0 011		// r0 += 64 (64)
+    Addi r0 011		// r0 += 64 (128)
+    Addi r0 011		// r0 += 64 (192)
+    Addi r0 100		// r0 += 32 (224)
+    Addi r0 101		// r0 += 16 (240)
+    Addi r0 110		// r0 += 8 (248)
+    Addi r0 010		// r0 += 4 (252)
+    Addi r0 111		// r0 += 2 (254)
+    Load r2 r6		// r2 = mem[122]
+    And r2 r0		// And LSW with decimal = 254
+    Load r3 r7		// r3 = mem[123]
+    Xor r2 r3        	// Xor results of r2 and r3 and store into r2
+    >> r3 7 
+  >> r3 7 			// r3 = 0
+>> r0 7
+>>r0 7			// r0 = 0 
+Add r0 r2 			// r0 = r2 
+>> r0 7 			// r0 = bit 7 
+Add r3 r2 			// r3 = r2 
+<< r3 1 			// pad with 0 
+>> r3 7 			// get bit 6 
+Xor r0 r3 			// xor 7 and 6 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 2 			//pad with 0 
+>> r3 7 			// get bits 5 
+Xor r0 r3 			// xor 7, 6, 5 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 3 			//pad with 0 
+>> r3 7 			// get bits 4 
+Xor r0 r3 			// xor 7, 6, 5, 4 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 4 			//pad with 0 
+>> r3 7 			// get bits 3 
+Xor r0 r3 			// xor 7, 6, 5, 4 ,3 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 5 			//pad with 0 
+>> r3 7 			// get bits 2 
+Xor r0 r3 			// xor 7, 6, 5, 4, 3, 2 
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 6 			//pad with 0 
+>> r3 7 			// get bits 1 
+Xor r0 r3 			// xor 7, 6, 5, 4, 3, 2, 1
+>> r3  7
+>> r3 7 			// r3 = 0 
+Add r3 r2 			// r3 = r2 
+<< r3 6 			//pad with 0 
+<< r3 1 			//pad with 0 
+>> r3 7 			// get bits 0 
+Xor r0 r3 			// xor 7, 6, 5, 4, 3, 2, 1, 
+    Lt r0 00             	// if r0 < 1
+    Jump Comp_parity	// True: Jump to comp_parity
+    Addi r4 101      	// False: r4 += 16
+Comp_parity: >> r0 7		// Set r0 to 0
+    >> r0 7		// Set r0 to 0
+    >> r2 7		// Set r2 to 0
+    >> r2 7		// Set r2 to 0
+    Add r2 r4		// r2 = calculated parity
+    Eq r2 r0		// if (r2 == 0)
+    Jump Loop_Condition	// True: No bits flipped, go next
+    Addi r0 101		// False: r0 += 16 (16)
+    And r2 r0 	// Get calculated global parity p16
+    >> r2 4		// Shift 4 bits to put p16 in LSW spot
+    >> r0 7		// Set r0 to 0
+    >> r0 7		// Set r0 to 0
+    Addi r0 001	// r0 += 1 (1)
+    Load r3 r6	// r3 = mem[LSW]
+    And r0 r3  	// Get message global parity p16
+    Eq r0 r2          	// if calculated p16 == received message’s p16
+    Jump Loop_Condition	// True: two bit error, go next
+    >> r2 4		// False: r2 = 0
+    Add r2 r4	// r2 = r4
+    >> r0 7		// Set r0 to 0
+    >> r0 7		// Set r0 to 0
+    Addi r0 110	// r0 += 8 (1000)
+    Addi r0 010	// r0 += 4 (1100)
+    Addi r0 111	// r0 += 2 (1110)
+    Addi r0 001	// r0 += 1 (1111)
+    And r2 r0	// Bitmask r0 onto r2
+    >> r3 7		// Set r3 to 0
+    >> r3 7		// Set r3 to 0
+    And r0 r3	// r0 = 0
+    Addi r0 010	// r0 += 4 (100)
+    Addi r0 111	// r0 += 2 (110)
+    Addi r0 001	// r0 += 1 (111)
+    Add r3 r2	// r3 = r2
+    Lt r2 10		// if (r2 < 8)
+    Load r5 r6	// True: r2 = mem[LSW]
+    Load r5 r7	// False: r2 = mem[MSW]
+    Lt r2 10		// if (r2 < 8)
+    >> r3 0		// True: Do nothing
+    And r3 r0	// False: r3 -= 8
+    >> r2 7		// r2 = 0
+    >> r2 7		// r2 = 0
+    And r0 r2	// r0 = 0
+    Addi r2 001	// r2 = 1
+    Eq r3 r0		// if (r3 == 0)
+    Jump Skip	// True: jump to skip
+Loop_shift: Addi r0 001	// False: r0 += 1
+    << r2 1			// Shift r2 by 1 to the left
+    Neq r3 r0		// if (r3 != r0)
+    Jump Loop_shift	// True: restart loop
+Skip: Xor r5 r2		// False: flip bit
+    >> r2 7		// r2 = 0
+    >> r2 7		// r2 = 0
+    Add r2 r4	// r2 = r4
+    >> r3 7		// Set r3 to 0
+    >> r3 7		// Set r3 to 0
+    Addi r3 110	// r0 += 8 (1000)
+    Addi r3 010	// r0 += 4 (1100)
+    Addi r3 111	// r0 += 2 (1110)
+    Addi r3 001	// r0 += 1 (1111)
+    And r2 r3	// Bitmask r3 onto r2
+    Lt r2 10		// if (r2 < 8)
+    Store r5 r6	// True: Store r0 into mem[LSW]
+    Store r5 r7	// False: Store r0 into mem[MSW]
+    Jump Loop_Condition 	// Check if there are more messages to decode
+Done: 11111111

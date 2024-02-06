@@ -1,0 +1,332 @@
+Load r2 r5 		//r1 = mem[r0]
+Addi r5 1 		// r0 = r0+1 
+Load r1 r5 		// r2 = mem[r0+ 1] 
+>> r0 7 		
+>> r0 7 		// set r4 = 0
+Addi r0 64 		// r4 = 64 
+Addi r0 64 		// r4 = 128
+Addi r0 64 		// r4 = 192 
+Addi r0 2 		// r4 = 194 
+Addi r0 1 		// r4 = 195  // start by setting number at 195 
+>> r3 7 
+>> r3 7 
+Add r3 r1 		// r3 = r1 // 00 
+>> r1 2 		// b11 
+Store r1 r0		// b11 =  mem[195]
+Addi r0 1 		// r4 = 196 
+>> r1 7 
+>> r1 7 		// r1 set to 0 
+Add r1 r3 		// r1 = r3 //00
+>> r1 1 		// b10 
+Store r1 r0		//b10 = mem[196]
+Addi r0 1 		// r4 = 197
+Store r3 r0		// b9 = mem[197] 
+Addi r0 1 		// r4 = 198 
+>> r3 7 
+>> r3 7 		// r3 = 0 
+Add r3 r2 		// r3 = r2 
+>> r2 7 		// b8 
+Store r2 r0 		// b8 = mem[198]
+Addi r0 1 		// r4 = 199 
+>> r2 7 
+>> r2 7 		// r2 = 0 
+Add r2 r3 		//r2 = r3 
+>> r2 6 		// b7 
+Store r2 r0 		// b7 = mem[199]
+Addi r0 1 		// r4 = 200 
+>> r2 7 
+>> r2 7 		// r2 = 0 
+Add r2 r3 		//r2 = r3 
+>> r2 5 		// b6 
+Store r2 r0 		// b6 = mem[200]
+Addi r0 1 		// r4 = 201
+>> r2 7 
+>> r2 7 		// r2 = 0 
+Add r2 r3 		//r2 = r3 
+>> r2 4 		// b5 
+Store r2 r0 		// b5 = mem[201]
+Addi r0 1 		// r4 = 202
+>> r2 7 
+>> r2 7 		// r2 = 0 
+Add r2 r3 		//r2 = r3 
+>> r2 3 		// b4 
+Store r2 r0 		// b4 = mem[202]
+Addi r0 1 		// r4 = 203
+>> r2 7 
+>> r2 7 		// r2 = 0 
+Add r2 r3 		//r2 = r3 
+>> r2 2 		// b3 
+Store r2 r0 		// b3 = mem[203]
+Addi r0 1 		// r4 = 204
+>> r2 7 
+>> r2 7 		// r2 = 0 
+Add r2 r3 		//r2 = r3 
+>> r2 1 		// b2 
+Store r2 r0 		// b2 = mem[204]
+Addi r0 1 		// r4 = 205
+>> r2 7 
+>> r2 7 		// r2 = 0 
+Add r2 r3 		//r2 = r3 
+Store r2 r0 		// b1 = mem[205]
+
+
+>> r0 7 		
+>> r0 7 		// set r4 = 0
+>> r1 7 
+>> r1 7 		// r1 = 0
+Addi r0 64 		// r4 = 64 
+Addi r0 64 		// r4 = 128
+Addi r0 64 		// r4 = 192 
+Addi r0 2 		// r4 = 194 
+Addi r0 1 		// r4 = 195  
+Add r1 r0 		// r1 = 195 
+Load r3 r0 		// r3 = b11 
+Addi r0 1 		// r4 = 196 
+Load r2 r0 		// r2 =  b10 
+XOR r3 r2 		//r3 = b11^ b10 
+Addi r0 1 		// r4= 197 
+Load r2 r0 		// r2 = b9 
+XOR r3 r2 		// r3 = r3^b9 
+Addi r0 1 		// r4 = 198
+Load r2 r0 		// r2 = b8 
+XOR r3 r2 		// r3 = r3^b8 
+Addi r0 1 		// r4 = 199
+Load r2 r0 		// r2 = b7 
+XOR r3 r2 		// r3 = r3^b7
+Addi r0 1 		// r4 = 200
+Load r2 r0 		// r2 = b6 
+XOR r3 r2 		// r3 = r3^b6
+Addi r0 1 		// r4 = 201
+Load r2 r0 		// r2 = b5 
+XOR r3 r2 		// r3 = r3^b5
+Addi r0 4    		// r4 = 205 
+Addi r0 1 		// r4 = 206 
+Store r3 r0		// p8 = mem[206]  // should be 1 for LSB
+Add r6 r3 		// r6 = r3 
+
+// p4 
+>> r0 7 
+>> r0 7 		// r0 = 0 
+Add r0 r1 		// r0 = r1 
+Load r3 r0 		// r3 = b11 
+Addi r0 1 		// r4 = 196 
+Load r2 r0 		// r2 =  b10 
+XOR r3 r2 		//r3 = b11^ b10 
+Addi r0 1 		// r4= 197 
+Load r2 r0 		// r2 = b9 
+XOR r3 r2 		// r3 = r3^b9 
+Addi r0 1 		// r4 = 198
+Load r2 r0 		// r2 = b8 
+XOR r3 r2 		// r3 = r3^b8 
+Addi r0 4 		// r0 = 202 
+Load r2 r0 		// r2 = b4 
+XOR r3 r2 		// r3 = r3^b4
+Addi r0 1 		// r0 = 203
+Load r2 r0 		// r2 = b3 
+XOR r3 r2 		// r3 = r3^b3
+Addi r0 1 		// r0 = 204
+Load r2 r0 		// r2 = b2 
+XOR r3 r2 		// r3 = r3^b2
+Addi r0 2 		// r0 = 206
+Addi r0 1 		// r0 = 207
+Store r3 r0		// p4 = mem[207]  
+
+//p2 
+>> r0 7 
+>> r0 7 		// r0 = 0 
+Add r0 r1 		// r0 = r1 
+Load r3 r0 		// r3 = b11 
+Addi r0 1 		// r4 = 196 
+Load r2 r0 		// r2 =  b10 
+XOR r3 r2 		//r3 = b11^ b10 
+Addi r0 2 		// r0 = 198
+Addi r0 1 		// r0 = 199 
+Load r2 r0 		// r2 = b7
+XOR r3 r2 		// r3 = r3^b7
+Addi r0 1 		// r0 = 200 
+Load r2 r0 		// r2 = b6 
+XOR r3 r2 		// r3 = r3^b6 
+Addi r0 2 		// r0 = 202
+Load r2 r0 		// r2 = b4 
+XOR r3 r2 		// r3 = r3^b4 
+Addi r0 1 		// r0 = 203
+Load r2 r0 		// r2 = b3 
+XOR r3 r2 		// r3 = r3^b3
+Addi r0 2 		// r0 = 205 
+Load r2 r0 		// r2 = b1 
+XOR r3 r2 		// r3 = r3^b1
+Addi r0 2 		// r0 = 207
+Addi r0 1 		// r0 = 208
+Store r3 r0 		// p2 = mem[207] 
+
+//p1 
+>> r0 7 
+>> r0 7 		// r0 = 0 
+Add r0 r1 		// r0 = r1 
+Load r3 r0 		// r3 = b11 
+Addi r0 2 		// r0 = 197 
+Load r2 r0 		// b9
+XOR r3 r2 		// r3 = b11^b9
+Addi r0 2 		// r0 = 199
+Load r2 r0 		// b7
+XOR r3 r2 		// r3 = r3^b7
+Addi r0 2 		// r0 = 201
+Load r2 r0 		// b5
+XOR r3 r2 		// r3 = r3^b5
+Addi r0 1 		// r0 = 202
+Load r2 r0 		// b4
+XOR r3 r2 		// r3 = r3^b4
+Addi r0 2 		// r0 = 204
+Load r2 r0 		// b2
+XOR r3 r2 		// r3 = r3^b2
+Addi r0 1 		// r0 = 205
+Load r2 r0 		// b1
+XOR r3 r2 		// r3 = r3^b1
+Addi r0 4 		// r0 = 209
+Store r3 r0 		// p1 = mem[209]  
+
+//p16
+>> r0 7 
+>> r0 7 		// r0 = 0 
+Add r0 r1 		// r0 = 195 
+Addi r0 4 
+Addi r0 2 
+Addi r0 1 		// r0 = 202
+Load r2 r0 		// b4
+XOR r6 r2 		// r6 = r6 ^b4 
+Addi r0 1 		// r0 = 203
+Load r2 r0 		// b3 
+XOR r6 r2 		// r6 = r6^b3 
+Addi r0 1 		// r0 = 204
+Load r2 r0 		// b2 
+XOR r6 r2 		// r6 = r6^b2 
+Addi r0 1 		// r0 = 205
+Load r2 r0 		// b1 
+XOR r6 r2 		// r6 = r6^b1 
+Addi r0 1 		// r0 = 206
+Load r2 r0 		// p8 
+XOR r6 r2 		// r6 = r6^p8 
+Addi r0 1 		// r0 = 207
+Load r2 r0 		// p4
+XOR r6 r2 		// r6 = r6^p4
+Addi r0 1 		// r0 = 208
+Load r2 r0 		// p2 
+XOR r6 r2 		// r6 = r6^p2
+XOR r6 r3 		// r6 = r6^p1 
+Addi r0 2 		// r0 = 210
+Store r6 r0 		// p16 = mem[210] 
+// setting up mem[30]
+>> r0 7 
+>> r0 7 		// r0 = 0 
+And r4 r0 		// r4 = 0 
+Addi r4 1 		// r4 = 1 
+Add r0 r1 		// r0 = 195 
+Load r2 r0 		//r2 = b11 
+AND r2 r4   		// get LSB in b11 in r2  
+<<  r2 1 		// shift left once 
+Addi r0 1 		// r0 = 196 
+Load r3 r0 		// r3 = b10 
+AND r3 r4 		// get LSB in b10 
+Add r2 r3 		// get b11 and b10 
+<< r2 1 		// shift left once 
+Addi r0 1 		// r0 = 197 
+Load r3 r0 		// r3 = b9 
+AND r3 r4 		// get LSB in b9 
+Add r2 r3 		// get b11 +  b10 + b9 
+<< r2 1 		// shift left once 
+Addi r0 1 		// r0 = 198
+Load r3 r0 		// r3 = b8 
+AND r3 r4 		// get LSB in b8 
+Add r2 r3 		// get 11 + 10 + 9 + 8
+<< r2 1 		// shift left once 
+Addi r0 1 		// r0 = 199
+Load r3 r0 		// r3 = b7
+AND r3 r4 		// get LSB in b7 
+Add r2 r3 		// get 11 + 10 + 9 + 8+ 7
+<< r2 1 		// shift left once 
+Addi r0 1 		// r0 = 200
+Load r3 r0 		// r3 = b6 
+AND r3 r4 		// get LSB in b6 
+Add r2 r3 		// get 11 + 10 + 9 + 8 + 7 + 6
+<< r2 1 		// shift left once 
+Addi r0 1 		// r0 = 201
+Load r3 r0 		// r3 = b5 
+AND r3 r4 		// get LSB in b5  
+Add r2 r3 		// get 11 + 10 + 9 + 8+ 7 + 6 + 5
+<< r2 1 		// shift left once 
+Addi r0 4 		// r0 = 205 
+Addi r0 1 		// r0 = 206
+Load r3 r0		// r3 = p8
+AND r3 r4 		// get LSB in p8
+Add r2 r3 		// got final bit  
+
+//get the next byte 
+>> r0 7 
+>> r0 7 		// r0 = 0 
+Add r0 r1 		// r0 = 195 
+Addi r0 4 		// r0 = 199
+Addi r0 2 		// r0 = 201
+Addi r0 1		// r0 = 202
+Load r3 r0 		// r3 = b4 
+AND r3 r4 		// get LSB b4 
+<< r3 1 		// shift left once 
+Addi r0 1 		// r0 = 203 
+Load r6 r0 		// r6 = b3
+AND r6 r4 		// get LSB b3 
+Add r3 r6 		// r3 = 4 + 3 
+<< r3 1 		// shift left once
+Addi r0 1		// r0 = 204 
+Load r6 r0 		// r6 = b2 
+AND r6 r4 		// get LSB b2 
+Add r3 r6 		// r3 = 4 + 3 + 2 
+<< r3 1 		// shift left once 
+Addi r0 2 		// r0 = 206
+Addi r0 1		// r0 = 207 
+Load r6 r0 		// r6 = p4 
+AND r6 r4 		// get LSB p4 
+Add r3 r6 		// r3 = 4 + 3 + 2 + p4 
+<< r3 1			// shift left once 
+>> r0 7 
+>> r0 7 		// r0 = 0 
+AND r7 r0 		// r7 = 0 
+Add r0 r1 		// r0 = 195 
+Addi r0 8 		// r0 = 203 
+Addi r0 2 		// r0 = 205
+Load r6 r0 		// r6 = b1 
+AND r6 r4 		// get LSB b1  
+Add r3 r6 		// r3 = 4 + 3 + 2 + p4 + b1 
+<< r3 1			// shift left once 
+Addi r0 2 		// r0 = 207
+Addi r0 1 		// r0 = 208
+Load r6 r0 		// r6 = p2  
+AND r6 r4 		// get LSB p2 
+Add r3 r6 		// r3 = 4 + 3 + 2 + p4 + 1 + p2
+<< r3 1			// shift left once  
+Addi r0 1 		// r0 = 209
+Load r6 r0 		// r6 = p1 
+AND r6 r4 		// get LSB p1 
+Add r3 r6 		// r3 = 4 + 3 + 2 + p4 + 1 + p2 + p1
+<< r3 1			// shift left once 
+Addi r0 1 		// r0 = 210 
+Load r6 r0 		// r6 = p16 
+AND r6 r4 		// get LSB p16 
+Add r3 r6 		// final bit. 
+Addi r7 16 		// r7 = 16
+Addi r7 8		// r7 = 24
+Addi r7 4 		// r7 = 28 
+Addi r7 1 		// r7 = 29 
+>> r0 7
+>> r0 7 		// r0 = 0 
+Add r0 r7 		// r0 = 29
+Add r0 2 		// r0 = 31
+Add r7 r5 		// r7 = r7 + r5 
+Store r3 r7 
+Addi r7 1 
+Store r2 r7
+>> r3 7
+>> r3 7			// r3 = 0 
+Add r3 r5 		// r3 = i 
+Addi r5 1 		// r5 ++ 
+Neq  r3 r0
+Jump 
+Ack
